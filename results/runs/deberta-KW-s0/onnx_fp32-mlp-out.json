@@ -1,0 +1,11 @@
+{
+  "run": "deberta-KW-s0",
+  "recipe": "fp32-mlp-out",
+  "fp32_products": 12,
+  "weight_products": 73,
+  "fp32_embeddings": false,
+  "int8_onnx_bytes": 328285226,
+  "quantize_s": 18.1,
+  "eval_s": 1100.4,
+  "threads": 8
+}

@@ -1,0 +1,36 @@
+{"run": "small-K-s0", "fp32_onnx_bytes": 114117706, "int8_onnx_bytes": 28738398, "export_quantize_s": 6.0, "threads": 16, "int8_eval_s": 156.3, "fp32_eval_s": 206.2, "ok": true, "end": "2026-10-16T00:57:35"}
+{"run": "small-KW-s0", "fp32_onnx_bytes": 114117706, "int8_onnx_bytes": 28738398, "export_quantize_s": 0.0, "threads": 16, "int8_eval_s": 141.7, "ok": true, "end": "2026-10-16T01:01:36"}
+{"run": "small-W-s0", "fp32_onnx_bytes": 114117706, "int8_onnx_bytes": 28738398, "export_quantize_s": 5.9, "threads": 16, "int8_eval_s": 163.4, "ok": true, "end": "2026-10-16T01:04:26"}
+{"run": "small-base-s0", "fp32_onnx_bytes": 114117706, "int8_onnx_bytes": 28738398, "export_quantize_s": 6.8, "threads": 16, "int8_eval_s": 172.0, "ok": true, "end": "2026-10-16T01:07:27"}
+{"run": "modernbert-base-s0", "fp32_onnx_bytes": 599013380, "int8_onnx_bytes": 150565512, "export_quantize_s": 31.7, "threads": 16, "int8_eval_s": 965.6, "ok": true, "end": "2026-10-16T01:28:08"}
+{"run": "modernbert-K-s0", "fp32_onnx_bytes": 599013380, "int8_onnx_bytes": 150565512, "export_quantize_s": 30.0, "threads": 16, "int8_eval_s": 1029.1, "fp32_eval_s": 1899.9, "ok": true, "end": "2026-10-16T02:17:34"}
+{"run": "modernbert-KW-s0", "fp32_onnx_bytes": 599013380, "int8_onnx_bytes": 150565512, "export_quantize_s": 29.1, "threads": 16, "int8_eval_s": 1321.2, "ok": true, "end": "2026-10-16T02:40:07"}
+{"run": "deberta-base-s0", "fp32_onnx_bytes": 736281563, "int8_onnx_bytes": 243368097, "export_quantize_s": 38.8, "threads": 16, "int8_eval_s": 1484.8, "ok": true, "end": "2026-10-16T03:05:37"}
+{"run": "modernbert-W-s0", "fp32_onnx_bytes": 599013380, "int8_onnx_bytes": 150565512, "export_quantize_s": 23.9, "threads": 16, "int8_eval_s": 1103.1, "ok": true, "end": "2026-10-16T03:24:26"}
+{"run": "deberta-K-s0", "fp32_onnx_bytes": 736281563, "int8_onnx_bytes": 243368097, "export_quantize_s": 30.7, "threads": 16, "int8_eval_s": 1274.2, "fp32_eval_s": 1506.6, "ok": true, "end": "2026-10-16T04:11:27"}
+{"run": "small-base-s1", "fp32_onnx_bytes": 114117706, "int8_onnx_bytes": 28738398, "export_quantize_s": 4.1, "threads": 16, "int8_eval_s": 105.9, "ok": true, "end": "2026-10-16T04:13:18"}
+{"run": "small-K-s1", "fp32_onnx_bytes": 114117706, "int8_onnx_bytes": 28738398, "export_quantize_s": 3.9, "threads": 16, "int8_eval_s": 110.7, "ok": true, "end": "2026-10-16T04:15:14"}
+{"run": "deberta-KW-s0", "fp32_onnx_bytes": 736281563, "int8_onnx_bytes": 243368097, "export_quantize_s": 39.5, "threads": 16, "int8_eval_s": 1195.7, "ok": true, "end": "2026-10-16T04:35:54"}
+{"run": "deberta-W-s0", "fp32_onnx_bytes": 736281563, "int8_onnx_bytes": 243368097, "export_quantize_s": 27.5, "threads": 16, "int8_eval_s": 951.2, "ok": true, "end": "2026-10-16T04:52:18"}
+{"run": "modernbert-K-s1", "fp32_onnx_bytes": 599013380, "int8_onnx_bytes": 150565512, "export_quantize_s": 20.1, "threads": 16, "int8_eval_s": 680.5, "ok": true, "end": "2026-10-16T05:04:01"}
+{"run": "deberta-base-s1", "fp32_onnx_bytes": 736281563, "int8_onnx_bytes": 243368097, "export_quantize_s": 26.7, "threads": 16, "int8_eval_s": 878.7, "ok": true, "end": "2026-10-16T05:19:10"}
+{"run": "modernbert-base-s1", "fp32_onnx_bytes": 599013380, "int8_onnx_bytes": 150565512, "export_quantize_s": 21.4, "threads": 16, "int8_eval_s": 705.7, "ok": true, "end": "2026-10-16T05:31:20"}
+{"run": "small-K-s2", "fp32_onnx_bytes": 114117706, "int8_onnx_bytes": 28738398, "export_quantize_s": 3.3, "threads": 16, "int8_eval_s": 77.2, "ok": true, "end": "2026-10-16T05:32:41"}
+{"run": "small-base-s2", "fp32_onnx_bytes": 114117706, "int8_onnx_bytes": 28738398, "export_quantize_s": 3.3, "threads": 16, "int8_eval_s": 83.2, "ok": true, "end": "2026-10-16T05:34:08"}
+{"run": "deberta-K-s1", "fp32_onnx_bytes": 736281563, "int8_onnx_bytes": 243368097, "export_quantize_s": 31.8, "threads": 16, "int8_eval_s": 925.5, "ok": true, "end": "2026-10-16T05:50:10"}
+{"run": "modernbert-base-s2", "fp32_onnx_bytes": 599013380, "int8_onnx_bytes": 150565512, "export_quantize_s": 20.3, "threads": 16, "int8_eval_s": 670.1, "ok": true, "end": "2026-10-16T06:01:43"}
+{"run": "modernbert-K-s2", "fp32_onnx_bytes": 599013380, "int8_onnx_bytes": 150565512, "export_quantize_s": 20.2, "threads": 16, "int8_eval_s": 698.9, "ok": true, "end": "2026-10-16T06:13:44"}
+{"run": "deberta-base-s2", "fp32_onnx_bytes": 736281563, "int8_onnx_bytes": 243368097, "export_quantize_s": 32.7, "threads": 16, "int8_eval_s": 865.6, "ok": true, "end": "2026-10-16T06:28:46"}
+{"run": "deberta-K-s2", "fp32_onnx_bytes": 736281563, "int8_onnx_bytes": 243368097, "export_quantize_s": 32.0, "threads": 16, "int8_eval_s": 1172.2, "ok": true, "end": "2026-10-16T06:50:54"}
+{"run": "small-KW-s1", "fp32_onnx_bytes": 114117706, "int8_onnx_bytes": 28738398, "export_quantize_s": 4.0, "threads": 16, "int8_eval_s": 119.1, "ok": true, "end": "2026-10-16T06:52:58"}
+{"run": "small-W-s1", "fp32_onnx_bytes": 114117706, "int8_onnx_bytes": 28738398, "export_quantize_s": 4.5, "threads": 16, "int8_eval_s": 106.1, "ok": true, "end": "2026-10-16T06:54:49"}
+{"run": "modernbert-W-s1", "fp32_onnx_bytes": 599013380, "int8_onnx_bytes": 150565512, "export_quantize_s": 24.7, "threads": 16, "int8_eval_s": 852.7, "ok": true, "end": "2026-10-16T07:10:29"}
+{"run": "modernbert-KW-s1", "fp32_onnx_bytes": 599013380, "int8_onnx_bytes": 150565512, "export_quantize_s": 20.5, "threads": 16, "int8_eval_s": 684.5, "ok": true, "end": "2026-10-16T07:23:16"}
+{"run": "deberta-W-s1", "fp32_onnx_bytes": 736281563, "int8_onnx_bytes": 243368097, "export_quantize_s": 29.8, "threads": 16, "int8_eval_s": 1026.8, "ok": true, "end": "2026-10-16T07:48:57"}
+{"run": "deberta-KW-s1", "fp32_onnx_bytes": 736281563, "int8_onnx_bytes": 243368097, "export_quantize_s": 28.8, "threads": 16, "int8_eval_s": 1041.6, "ok": true, "end": "2026-10-16T08:14:51"}
+{"run": "small-KW-s2", "fp32_onnx_bytes": 114117706, "int8_onnx_bytes": 28738398, "export_quantize_s": 3.4, "threads": 16, "int8_eval_s": 66.7, "ok": true, "end": "2026-10-16T08:16:02"}
+{"run": "small-W-s2", "fp32_onnx_bytes": 114117706, "int8_onnx_bytes": 28738398, "export_quantize_s": 3.3, "threads": 16, "int8_eval_s": 65.5, "ok": true, "end": "2026-10-16T08:17:11"}
+{"run": "modernbert-W-s2", "fp32_onnx_bytes": 599013380, "int8_onnx_bytes": 150565512, "export_quantize_s": 21.8, "threads": 16, "int8_eval_s": 711.2, "ok": true, "end": "2026-10-16T08:32:26"}
+{"run": "modernbert-KW-s2", "fp32_onnx_bytes": 599013380, "int8_onnx_bytes": 150565512, "export_quantize_s": 22.4, "threads": 16, "int8_eval_s": 649.3, "ok": true, "end": "2026-10-16T08:46:41"}
+{"run": "deberta-W-s2", "fp32_onnx_bytes": 736281563, "int8_onnx_bytes": 243368097, "export_quantize_s": 29.8, "threads": 16, "int8_eval_s": 1236.9, "ok": true, "end": "2026-10-16T09:18:51"}
+{"run": "deberta-KW-s2", "fp32_onnx_bytes": 736281563, "int8_onnx_bytes": 243368097, "export_quantize_s": 33.7, "threads": 16, "int8_eval_s": 1170.2, "ok": true, "end": "2026-10-16T09:39:59"}

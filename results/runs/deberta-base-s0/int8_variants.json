@@ -1,0 +1,48 @@
+{
+  "run": "deberta-base-s0",
+  "docs": 360,
+  "per_source": 60,
+  "weight_matmuls": 73,
+  "variants": {
+    "default": {
+      "excluded_matmuls": 0,
+      "per_channel": false,
+      "fp32_embeddings": false,
+      "bytes": 243368097,
+      "f1_strict_macro": 0.0009380863039399623,
+      "removal_core_pooled": 0.1383776414451261,
+      "tab_removal_all": 0.0,
+      "tab_keep_violation": 0.028296547821165818,
+      "wikineural_keep_violation": 0.956989247311828
+    },
+    "fp32 MLP output projections": {
+      "excluded_matmuls": 12,
+      "per_channel": false,
+      "fp32_embeddings": false,
+      "bytes": 328285226,
+      "f1_strict_macro": 0.8172127194365679,
+      "removal_core_pooled": 0.9700068166325835,
+      "tab_removal_all": 0.9370567375886525,
+      "tab_keep_violation": 0.6898698358800226,
+      "wikineural_keep_violation": 0.5913978494623656
+    },
+    "fp32 embeddings": {
+      "excluded_matmuls": 0,
+      "per_channel": false,
+      "fp32_embeddings": true,
+      "bytes": 538510041,
+      "f1_strict_macro": 0.0009345794392523365,
+      "removal_core_pooled": 0.147239263803681,
+      "tab_removal_all": 0.0,
+      "tab_keep_violation": 0.025466893039049237,
+      "wikineural_keep_violation": 0.967741935483871
+    }
+  },
+  "fp32": {
+    "f1_strict_macro": 0.8248172203856475,
+    "removal_core_pooled": 0.9720518064076347,
+    "tab_removal_all": 0.9323286052009456,
+    "tab_keep_violation": 0.6847764572722128,
+    "wikineural_keep_violation": 0.6236559139784946
+  }
+}

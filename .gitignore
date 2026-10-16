@@ -10,3 +10,6 @@ checkpoints/
 scratch/
 logs/runs/*.log.tmp
 node_modules/
+logs/*.out
+logs/*.log
+logs/runs/

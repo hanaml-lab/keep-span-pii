@@ -1,0 +1,11 @@
+{
+  "run": "modernbert-W-s0",
+  "recipe": "fp32-mlp-out",
+  "fp32_products": 22,
+  "weight_products": 90,
+  "fp32_embeddings": false,
+  "int8_onnx_bytes": 208934686,
+  "quantize_s": 8.1,
+  "eval_s": 1032.4,
+  "threads": 8
+}

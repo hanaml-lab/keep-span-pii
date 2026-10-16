@@ -1,0 +1,8 @@
+{
+  "run": "modernbert-K-s1",
+  "fp32_onnx_bytes": 599013380,
+  "int8_onnx_bytes": 150565512,
+  "export_quantize_s": 20.1,
+  "threads": 16,
+  "int8_eval_s": 680.5
+}

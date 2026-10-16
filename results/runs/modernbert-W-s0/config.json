@@ -1,0 +1,45 @@
+{
+  "run": "modernbert-W-s0",
+  "model": "modernbert",
+  "base": "answerdotai/ModernBERT-base",
+  "base_revision": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+  "keep_negatives": false,
+  "wikipedia_negatives": true,
+  "seed": 0,
+  "epochs": 3,
+  "lr": 5e-05,
+  "schedule": "linear, warmup 6%",
+  "optimizer": "AdamW",
+  "betas": [
+    0.9,
+    0.999
+  ],
+  "eps": 1e-06,
+  "weight_decay": 0.01,
+  "grad_clip": 1.0,
+  "step_tokens": 16384,
+  "micro_tokens": 8192,
+  "max_len": 512,
+  "overlap": 128,
+  "precision": "bf16 autocast, fp32 master weights",
+  "frozen": "input word embeddings",
+  "gradient_checkpointing": true,
+  "train_docs": 32066,
+  "train_windows": 35419,
+  "train_labelled_tokens": 4312031,
+  "keep_tokens": 89406,
+  "steps": 583,
+  "params": {
+    "total": 149616399,
+    "input_embeddings": 38682624,
+    "trainable": 110933775
+  },
+  "train_docs_by_source": {
+    "faker": 4623,
+    "openpii": 16000,
+    "tab": 1010,
+    "wikipedia": 6000,
+    "wnut17": 4433
+  },
+  "smoke": false
+}

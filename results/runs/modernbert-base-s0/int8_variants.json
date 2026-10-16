@@ -1,0 +1,75 @@
+{
+  "run": "modernbert-base-s0",
+  "docs": 360,
+  "per_source": 60,
+  "weight_matmuls": 90,
+  "variants": {
+    "default": {
+      "excluded_matmuls": 0,
+      "per_channel": false,
+      "bytes": 150565512,
+      "f1_strict_macro": 0.45496534231640023,
+      "removal_core_pooled": 0.7300613496932515,
+      "tab_removal_all": 0.6947399527186762,
+      "tab_keep_violation": 0.4465195246179966,
+      "wikineural_keep_violation": 0.5053763440860215
+    },
+    "per-channel weights": {
+      "excluded_matmuls": 0,
+      "per_channel": true,
+      "bytes": 151245711,
+      "f1_strict_macro": 0.4910532025541326,
+      "removal_core_pooled": 0.7471029311520109,
+      "tab_removal_all": 0.7195626477541371,
+      "tab_keep_violation": 0.4465195246179966,
+      "wikineural_keep_violation": 0.4946236559139785
+    },
+    "fp32 MLP output projections": {
+      "excluded_matmuls": 22,
+      "per_channel": false,
+      "bytes": 208934686,
+      "f1_strict_macro": 0.7780104884924552,
+      "removal_core_pooled": 0.9597818677573279,
+      "tab_removal_all": 0.9110520094562647,
+      "tab_keep_violation": 0.6881720430107527,
+      "wikineural_keep_violation": 0.6236559139784946
+    },
+    "fp32 attention output projections": {
+      "excluded_matmuls": 22,
+      "per_channel": false,
+      "bytes": 189469526,
+      "f1_strict_macro": 0.47316257584114724,
+      "removal_core_pooled": 0.7423312883435583,
+      "tab_removal_all": 0.6879432624113475,
+      "tab_keep_violation": 0.44086021505376344,
+      "wikineural_keep_violation": 0.5483870967741935
+    },
+    "fp32 MLP input projections": {
+      "excluded_matmuls": 22,
+      "per_channel": false,
+      "bytes": 267324490,
+      "f1_strict_macro": 0.46382307732755523,
+      "removal_core_pooled": 0.7164280845262441,
+      "tab_removal_all": 0.6861702127659575,
+      "tab_keep_violation": 0.4352009054895303,
+      "wikineural_keep_violation": 0.5161290322580645
+    },
+    "fp32 head and classifier": {
+      "excluded_matmuls": 2,
+      "per_channel": false,
+      "bytes": 152367525,
+      "f1_strict_macro": 0.4730139551933876,
+      "removal_core_pooled": 0.7321063394683026,
+      "tab_removal_all": 0.6971040189125296,
+      "tab_keep_violation": 0.4465195246179966,
+      "wikineural_keep_violation": 0.5053763440860215
+    }
+  },
+  "fp32": {
+    "f1_strict_macro": 0.8134487917456299,
+    "removal_core_pooled": 0.9611451942740287,
+    "tab_removal_all": 0.918144208037825,
+    "tab_keep_violation": 0.6791171477079796,
+    "wikineural_keep_violation": 0.6344086021505376
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "run": "small-base-s0",
+  "fp32_onnx_bytes": 114117706,
+  "int8_onnx_bytes": 28738398,
+  "export_quantize_s": 6.8,
+  "threads": 16,
+  "int8_eval_s": 172.0
+}

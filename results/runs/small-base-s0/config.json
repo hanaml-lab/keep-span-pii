@@ -1,0 +1,44 @@
+{
+  "run": "small-base-s0",
+  "model": "small",
+  "base": "gravitee-io/bert-small-pii-detection",
+  "base_revision": "f8c27a85c51c0168f07b9dcf00265bf0a4097939",
+  "keep_negatives": false,
+  "wikipedia_negatives": false,
+  "seed": 0,
+  "epochs": 3,
+  "lr": 0.0001,
+  "schedule": "linear, warmup 6%",
+  "optimizer": "AdamW",
+  "betas": [
+    0.9,
+    0.999
+  ],
+  "eps": 1e-06,
+  "weight_decay": 0.01,
+  "grad_clip": 1.0,
+  "step_tokens": 16384,
+  "micro_tokens": 16384,
+  "max_len": 512,
+  "overlap": 128,
+  "precision": "bf16 autocast, fp32 master weights",
+  "frozen": "input word embeddings",
+  "gradient_checkpointing": false,
+  "train_docs": 26066,
+  "train_windows": 29303,
+  "train_labelled_tokens": 3735769,
+  "keep_tokens": 84538,
+  "steps": 383,
+  "params": {
+    "total": 28508687,
+    "input_embeddings": 15627264,
+    "trainable": 12881423
+  },
+  "train_docs_by_source": {
+    "faker": 4623,
+    "openpii": 16000,
+    "tab": 1010,
+    "wnut17": 4433
+  },
+  "smoke": false
+}

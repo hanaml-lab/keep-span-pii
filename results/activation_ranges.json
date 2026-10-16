@@ -1,0 +1,127 @@
+{
+  "modernbert-base-s0": {
+    "attention input (Wqkv / query, key, value)": {
+      "calls": 836,
+      "median_max_over_p99": 5.645744577542423,
+      "median_p99_levels": 22.494818864132434,
+      "worst_max_over_p99": 13.415143221172645,
+      "worst_p99_levels": 9.466913465341198,
+      "calls_over_100x": 0.0,
+      "layers_over_100x": []
+    },
+    "attention output (Wo / attention.output.dense)": {
+      "calls": 836,
+      "median_max_over_p99": 2.9158523418634346,
+      "median_p99_levels": 43.555020208463226,
+      "worst_max_over_p99": 5.98485819716148,
+      "worst_p99_levels": 21.220218728028346,
+      "calls_over_100x": 0.0,
+      "layers_over_100x": []
+    },
+    "MLP input (Wi / intermediate.dense)": {
+      "calls": 836,
+      "median_max_over_p99": 6.82033085785149,
+      "median_p99_levels": 18.620797621951837,
+      "worst_max_over_p99": 8.177365276364995,
+      "worst_p99_levels": 15.530674698740384,
+      "calls_over_100x": 0.0,
+      "layers_over_100x": []
+    },
+    "MLP output (Wo / output.dense)": {
+      "calls": 836,
+      "median_max_over_p99": 9.636896255012015,
+      "median_p99_levels": 13.178519081332833,
+      "worst_max_over_p99": 6548.183402909579,
+      "worst_p99_levels": 0.01939469196045572,
+      "calls_over_100x": 0.17942583732057416,
+      "layers_over_100x": [
+        "model.layers.11.mlp.Wo",
+        "model.layers.15.mlp.Wo",
+        "model.layers.4.mlp.Wo",
+        "model.layers.9.mlp.Wo"
+      ]
+    }
+  },
+  "small-base-s0": {
+    "attention input (Wqkv / query, key, value)": {
+      "calls": 152,
+      "median_max_over_p99": 4.915779699616532,
+      "median_p99_levels": 25.83517033023245,
+      "worst_max_over_p99": 6.166421325765144,
+      "worst_p99_levels": 20.59541398336766,
+      "calls_over_100x": 0.0,
+      "layers_over_100x": []
+    },
+    "attention output (Wo / attention.output.dense)": {
+      "calls": 152,
+      "median_max_over_p99": 2.1244073218376807,
+      "median_p99_levels": 59.78140442312389,
+      "worst_max_over_p99": 4.260052291595332,
+      "worst_p99_levels": 29.811840631759058,
+      "calls_over_100x": 0.0,
+      "layers_over_100x": []
+    },
+    "MLP input (Wi / intermediate.dense)": {
+      "calls": 152,
+      "median_max_over_p99": 14.213630493642444,
+      "median_p99_levels": 8.93508523961822,
+      "worst_max_over_p99": 18.287877857959646,
+      "worst_p99_levels": 6.944490825365191,
+      "calls_over_100x": 0.0,
+      "layers_over_100x": []
+    },
+    "MLP output (Wo / output.dense)": {
+      "calls": 152,
+      "median_max_over_p99": 7.675560440176124,
+      "median_p99_levels": 16.546544257058162,
+      "worst_max_over_p99": 16.539026507067796,
+      "worst_p99_levels": 7.678807452526168,
+      "calls_over_100x": 0.0,
+      "layers_over_100x": []
+    }
+  },
+  "deberta-base-s0": {
+    "attention input (Wqkv / query, key, value)": {
+      "calls": 888,
+      "median_max_over_p99": 10.246411950120343,
+      "median_p99_levels": 14.523775479822806,
+      "worst_max_over_p99": 14.169603783126437,
+      "worst_p99_levels": 8.962847652185955,
+      "calls_over_100x": 0.0,
+      "layers_over_100x": []
+    },
+    "attention output (Wo / attention.output.dense)": {
+      "calls": 444,
+      "median_max_over_p99": 2.7645891036643224,
+      "median_p99_levels": 45.93811720763008,
+      "worst_max_over_p99": 7.257381595610929,
+      "worst_p99_levels": 17.4994243208606,
+      "calls_over_100x": 0.0,
+      "layers_over_100x": []
+    },
+    "MLP input (Wi / intermediate.dense)": {
+      "calls": 444,
+      "median_max_over_p99": 45.621625626926956,
+      "median_p99_levels": 2.7959589356979797,
+      "worst_max_over_p99": 135.2229192428962,
+      "worst_p99_levels": 0.9391898999893231,
+      "calls_over_100x": 0.08333333333333333,
+      "layers_over_100x": [
+        "deberta.encoder.layer.3.intermediate.dense"
+      ]
+    },
+    "MLP output (Wo / output.dense)": {
+      "calls": 444,
+      "median_max_over_p99": 40.05716779497151,
+      "median_p99_levels": 3.170469814291171,
+      "worst_max_over_p99": 222.27793179823118,
+      "worst_p99_levels": 0.5713567648059726,
+      "calls_over_100x": 0.24549549549549549,
+      "layers_over_100x": [
+        "deberta.encoder.layer.0.output.dense",
+        "deberta.encoder.layer.1.output.dense",
+        "deberta.encoder.layer.2.output.dense"
+      ]
+    }
+  }
+}

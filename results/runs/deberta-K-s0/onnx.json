@@ -1,0 +1,9 @@
+{
+  "run": "deberta-K-s0",
+  "fp32_onnx_bytes": 736281563,
+  "int8_onnx_bytes": 243368097,
+  "export_quantize_s": 30.7,
+  "threads": 16,
+  "int8_eval_s": 1274.2,
+  "fp32_eval_s": 1506.6
+}

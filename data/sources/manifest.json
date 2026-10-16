@@ -1,0 +1,131 @@
+{
+  "openpii": {
+    "name": "Ai4Privacy OpenPII 1M (English records only)",
+    "repo": "ai4privacy/pii-masking-openpii-1m",
+    "kind": "dataset",
+    "revision": "ecfdc547f4a0955600cfe6ab98ba2a162207fcc0",
+    "licence": "CC BY 4.0",
+    "page": "https://huggingface.co/datasets/ai4privacy/pii-masking-openpii-1m",
+    "files": [
+      {
+        "path": "data/validation.jsonl",
+        "url": "https://huggingface.co/datasets/ai4privacy/pii-masking-openpii-1m/resolve/ecfdc547f4a0955600cfe6ab98ba2a162207fcc0/data/validation.jsonl",
+        "bytes": 920284464,
+        "sha256": "f945f662cab477e8aef02ce6d9a5525d8b9d4ff6436809649d8c398156fea010"
+      },
+      {
+        "path": "README.md",
+        "url": "https://huggingface.co/datasets/ai4privacy/pii-masking-openpii-1m/resolve/ecfdc547f4a0955600cfe6ab98ba2a162207fcc0/README.md",
+        "bytes": 9106,
+        "sha256": "f6c425ec1b231ed9756b461682d82cec746183dea6031b860ce55d8e3854ad48"
+      }
+    ]
+  },
+  "tab": {
+    "name": "Text Anonymization Benchmark (TAB), ECHR corpus",
+    "repo": "ildpil/text-anonymization-benchmark",
+    "kind": "dataset",
+    "revision": "1f22ce098996054689b5b331fb20b3a74a78e1c5",
+    "licence": "MIT",
+    "page": "https://github.com/NorskRegnesentral/text-anonymization-benchmark",
+    "files": [
+      {
+        "path": "echr_train.zip",
+        "url": "https://huggingface.co/datasets/ildpil/text-anonymization-benchmark/resolve/1f22ce098996054689b5b331fb20b3a74a78e1c5/echr_train.zip",
+        "bytes": 5305013,
+        "sha256": "f5e21a061e4f2bc87b97e1a91633216ddaa166e2f0e53026b38b5637ed65ae18"
+      },
+      {
+        "path": "echr_dev.zip",
+        "url": "https://huggingface.co/datasets/ildpil/text-anonymization-benchmark/resolve/1f22ce098996054689b5b331fb20b3a74a78e1c5/echr_dev.zip",
+        "bytes": 1110255,
+        "sha256": "1d86c8041d336825148601325ebb917d047683ba26a01b53ba2eeeae855e65a3"
+      },
+      {
+        "path": "echr_test.zip",
+        "url": "https://huggingface.co/datasets/ildpil/text-anonymization-benchmark/resolve/1f22ce098996054689b5b331fb20b3a74a78e1c5/echr_test.zip",
+        "bytes": 1208410,
+        "sha256": "22e3c7a1f96a9646ca9806f6d7ae6d3156e7bf3a417842518e25a72a126a828a"
+      },
+      {
+        "path": "LICENSE.txt",
+        "url": "https://huggingface.co/datasets/ildpil/text-anonymization-benchmark/resolve/1f22ce098996054689b5b331fb20b3a74a78e1c5/LICENSE.txt",
+        "bytes": 1089,
+        "sha256": "9569b31acf50e1cb3f38f47220f2c3a42f533e07e72fe2d18c2871e89098a8c7"
+      }
+    ]
+  },
+  "wnut17": {
+    "name": "WNUT-17 emerging and rare entities",
+    "repo": "leondz/wnut_17",
+    "kind": "dataset",
+    "revision": "refs%2Fconvert%2Fparquet",
+    "revision_note": "Parquet conversion of revision be8fbd57399293da6f9aad56a793bce5bf1fd30e",
+    "licence": "CC BY 4.0",
+    "page": "https://noisy-text.github.io/2017/emerging-rare-entities.html",
+    "files": [
+      {
+        "path": "wnut_17/train/0000.parquet",
+        "url": "https://huggingface.co/datasets/leondz/wnut_17/resolve/refs%2Fconvert%2Fparquet/wnut_17/train/0000.parquet",
+        "bytes": 309383,
+        "sha256": "6139f865cc3babe93d21947c0f4d239d4dea6f74bc7bdd9ebe0ab9dde74ce3af"
+      },
+      {
+        "path": "wnut_17/validation/0000.parquet",
+        "url": "https://huggingface.co/datasets/leondz/wnut_17/resolve/refs%2Fconvert%2Fparquet/wnut_17/validation/0000.parquet",
+        "bytes": 67097,
+        "sha256": "8e15496da8f258ff853b614e4ce9c88d79de08244fdc192a3249c2efbb996ba8"
+      },
+      {
+        "path": "wnut_17/test/0000.parquet",
+        "url": "https://huggingface.co/datasets/leondz/wnut_17/resolve/refs%2Fconvert%2Fparquet/wnut_17/test/0000.parquet",
+        "bytes": 116408,
+        "sha256": "c85ed5a45c4393f97bf64da11e9a49d4109e903a051c0e43073d3d732d748b58"
+      }
+    ]
+  },
+  "wikineural": {
+    "name": "WikiNEuRal (English)",
+    "repo": "Babelscape/wikineural",
+    "kind": "dataset",
+    "revision": "74c9b9dca034bb1606a6769457983904bd976803",
+    "licence": "CC BY-NC-SA 4.0 (used for evaluation only)",
+    "page": "https://huggingface.co/datasets/Babelscape/wikineural",
+    "files": [
+      {
+        "path": "data/train_en-00000-of-00001.parquet",
+        "url": "https://huggingface.co/datasets/Babelscape/wikineural/resolve/74c9b9dca034bb1606a6769457983904bd976803/data/train_en-00000-of-00001.parquet",
+        "bytes": 7183839,
+        "sha256": "983628c2ec8171847a9ab5778243e28e96ed24a2c7d825ad848d6bb4fdbf1fc6"
+      },
+      {
+        "path": "data/val_en-00000-of-00001.parquet",
+        "url": "https://huggingface.co/datasets/Babelscape/wikineural/resolve/74c9b9dca034bb1606a6769457983904bd976803/data/val_en-00000-of-00001.parquet",
+        "bytes": 899151,
+        "sha256": "2f89499b08ec1efeb3f202045cbfd9f873f0cc242ac0dcfb029b963dc6dc3de2"
+      },
+      {
+        "path": "data/test_en-00000-of-00001.parquet",
+        "url": "https://huggingface.co/datasets/Babelscape/wikineural/resolve/74c9b9dca034bb1606a6769457983904bd976803/data/test_en-00000-of-00001.parquet",
+        "bytes": 894361,
+        "sha256": "6062b40d88ddf1cbce2bba1fc0e5ec40ab789943a919088ce113131790a3870d"
+      }
+    ]
+  },
+  "wikipedia": {
+    "name": "Wikipedia (English, 2023-11-01 dump), one shard",
+    "repo": "wikimedia/wikipedia",
+    "kind": "dataset",
+    "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+    "licence": "CC BY-SA 3.0 and GFDL",
+    "page": "https://huggingface.co/datasets/wikimedia/wikipedia",
+    "files": [
+      {
+        "path": "20231101.en/train-00007-of-00041.parquet",
+        "url": "https://huggingface.co/datasets/wikimedia/wikipedia/resolve/b04c8d1ceb2f5cd4588862100d08de323dccfbaa/20231101.en/train-00007-of-00041.parquet",
+        "bytes": 228195804,
+        "sha256": "adebba8b075444923ba42ed6214fe205efc756c773f440d98cbdd88a33597c2c"
+      }
+    ]
+  }
+}

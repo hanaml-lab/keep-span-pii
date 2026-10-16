@@ -1,0 +1,220 @@
+{
+  "duplicates_dropped": {
+    "faker": 216,
+    "wnut17": 131,
+    "wikineural": 4,
+    "wikipedia": 145
+  },
+  "sources": {
+    "faker": {
+      "test": {
+        "docs": 581,
+        "chars": 54578,
+        "spans": 1743,
+        "keep": 0,
+        "span_types": {
+          "NAME": 491,
+          "LOC": 450,
+          "QUASI": 45,
+          "DATE": 188,
+          "CONTACT": 306,
+          "ID": 263
+        }
+      },
+      "train": {
+        "docs": 4623,
+        "chars": 434341,
+        "spans": 13587,
+        "keep": 0,
+        "span_types": {
+          "NAME": 3980,
+          "CONTACT": 2337,
+          "QUASI": 387,
+          "LOC": 3157,
+          "DATE": 1683,
+          "ID": 2043
+        }
+      },
+      "validation": {
+        "docs": 580,
+        "chars": 54764,
+        "spans": 1709,
+        "keep": 0,
+        "span_types": {
+          "ID": 259,
+          "NAME": 500,
+          "LOC": 410,
+          "CONTACT": 292,
+          "DATE": 206,
+          "QUASI": 42
+        }
+      }
+    },
+    "openpii": {
+      "test": {
+        "docs": 1000,
+        "chars": 357306,
+        "spans": 6186,
+        "keep": 0,
+        "span_types": {
+          "NAME": 1069,
+          "CONTACT": 979,
+          "DATE": 943,
+          "ID": 1210,
+          "LOC": 1264,
+          "QUASI": 721
+        }
+      },
+      "train": {
+        "docs": 16000,
+        "chars": 5635063,
+        "spans": 95578,
+        "keep": 0,
+        "span_types": {
+          "NAME": 15758,
+          "ID": 18767,
+          "DATE": 14557,
+          "LOC": 19644,
+          "CONTACT": 15396,
+          "QUASI": 11456
+        }
+      },
+      "validation": {
+        "docs": 800,
+        "chars": 284967,
+        "spans": 4820,
+        "keep": 0,
+        "span_types": {
+          "NAME": 780,
+          "ID": 1001,
+          "QUASI": 591,
+          "DATE": 742,
+          "LOC": 970,
+          "CONTACT": 736
+        }
+      }
+    },
+    "tab": {
+      "test": {
+        "docs": 132,
+        "chars": 1032609,
+        "spans": 7280,
+        "keep": 4024,
+        "span_types": {
+          "DATE": 3512,
+          "ID": 383,
+          "NAME": 1115,
+          "QUASI": 639,
+          "LOC": 537,
+          "ORG": 1094
+        }
+      },
+      "train": {
+        "docs": 1010,
+        "chars": 7600457,
+        "spans": 55592,
+        "keep": 26697,
+        "span_types": {
+          "ID": 2138,
+          "QUASI": 6133,
+          "NAME": 10538,
+          "DATE": 25209,
+          "ORG": 7876,
+          "LOC": 3698
+        }
+      },
+      "validation": {
+        "docs": 126,
+        "chars": 950586,
+        "spans": 6278,
+        "keep": 3075,
+        "span_types": {
+          "ID": 214,
+          "NAME": 1179,
+          "DATE": 3011,
+          "QUASI": 581,
+          "ORG": 923,
+          "LOC": 370
+        }
+      }
+    },
+    "wikineural": {
+      "test": {
+        "docs": 2000,
+        "chars": 242903,
+        "spans": 0,
+        "keep": 3422,
+        "span_types": {}
+      },
+      "train": {
+        "docs": 0,
+        "chars": 0,
+        "spans": 0,
+        "keep": 0,
+        "span_types": {}
+      },
+      "validation": {
+        "docs": 800,
+        "chars": 97449,
+        "spans": 0,
+        "keep": 1322,
+        "span_types": {}
+      }
+    },
+    "wikipedia": {
+      "test": {
+        "docs": 1000,
+        "chars": 491855,
+        "spans": 0,
+        "keep": 0,
+        "span_types": {}
+      },
+      "train": {
+        "docs": 6000,
+        "chars": 2868529,
+        "spans": 0,
+        "keep": 0,
+        "span_types": {}
+      },
+      "validation": {
+        "docs": 400,
+        "chars": 197474,
+        "spans": 0,
+        "keep": 0,
+        "span_types": {}
+      }
+    },
+    "wnut17": {
+      "test": {
+        "docs": 549,
+        "chars": 49862,
+        "spans": 230,
+        "keep": 0,
+        "span_types": {
+          "NAME": 154,
+          "LOC": 76
+        }
+      },
+      "train": {
+        "docs": 4433,
+        "chars": 401069,
+        "spans": 1845,
+        "keep": 0,
+        "span_types": {
+          "LOC": 595,
+          "NAME": 1250
+        }
+      },
+      "validation": {
+        "docs": 577,
+        "chars": 51847,
+        "spans": 208,
+        "keep": 0,
+        "span_types": {
+          "NAME": 133,
+          "LOC": 75
+        }
+      }
+    }
+  }
+}

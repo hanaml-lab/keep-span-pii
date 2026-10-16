@@ -1,0 +1,12 @@
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.venv/
+data/raw/
+data/processed/
+data/cache/
+checkpoints/
+scratch/
+logs/runs/*.log.tmp
+node_modules/

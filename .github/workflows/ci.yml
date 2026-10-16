@@ -1,0 +1,55 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      # The CPU build of torch, so the runner does not download CUDA libraries.
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e ".[dev,onnx]"
+      - run: ruff check .
+      - run: pytest -q
+      # The whole pipeline on CPU with a tiny random model and no downloads: it checks that every stage runs,
+      # not the study's numbers, which come from scripts/sweep.py on a GPU.
+      - name: Smoke run on CPU
+        run: python -m keepspan.smoke
+
+  results:
+    # Every table in the report is recomputed from the committed per-run outputs; this checks that the summary
+    # the report was built from matches them.
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e .
+      - name: Run outputs are complete
+        run: python scripts/check_results.py
+      - name: CITATION.cff is valid
+        run: pipx run cffconvert --validate

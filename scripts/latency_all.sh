@@ -13,6 +13,10 @@ for m in small modernbert deberta; do
   case $m in small) v=30522;; modernbert) v=50368;; deberta) v=128100;; esac
   M="$M,$m-int8=../../$C/$m-K-s0/onnx/model_int8.onnx,$m-fp32=../../$C/$m-K-s0/onnx/model.onnx"
   V="$V,$m-int8=$v,$m-fp32=$v"
+  if [ "$m" != small ]; then
+    M="$M,$m-int8-mix=../../$C/$m-K-s0/onnx/model_int8_fp32-mlp-out.onnx"
+    V="$V,$m-int8-mix=$v"
+  fi
 done
 taskset -c 0-7 node bench.mjs --models "${M#,}" --vocab "${V#,}" --threads 1,4 --lengths 32,128,512 --runs 30 \
   --out ../../results/latency_browser.json

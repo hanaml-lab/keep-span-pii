@@ -88,6 +88,15 @@ def main() -> int:
         variants = {k: v for k, v in variants.items() if k in args.only}
     out = {"run": args.run, "docs": len(docs), "per_source": args.per_source, "weight_matmuls": len(names),
            "variants": {}}
+    path = ROOT / "results" / "runs" / args.run / "int8_variants.json"
+    prev = json.loads(path.read_text()) if path.exists() else {}
+    if prev.get("per_source") != args.per_source:
+        prev = {}
+
+    def save(o):
+        """Write after every variant, keeping variants scored earlier on the same subset."""
+        merged = dict(o, variants=prev.get("variants", {}) | o["variants"])
+        path.write_text(json.dumps(merged, indent=2) + "\n")
     t0 = time.time()
     ref = M.summarize(docs, predict_with(forward_fn(session(fp32, args.threads)), tok, docs, 8192))["headline"]
     out["fp32"] = {k: ref[k] for k in KEYS}
@@ -104,12 +113,8 @@ def main() -> int:
                                  "bytes": q.stat().st_size, **{k: h[k] for k in KEYS}}
         print(name, len(exclude), {k: round(100 * (h[k] - ref[k]), 1) for k in KEYS}, flush=True)
         q.unlink()
-    path = ROOT / "results" / "runs" / args.run / "int8_variants.json"
-    if path.exists():  # keep variants scored earlier on the same subset
-        prev = json.loads(path.read_text())
-        if prev.get("per_source") == out["per_source"]:
-            out["variants"] = prev["variants"] | out["variants"]
-    path.write_text(json.dumps(out, indent=2) + "\n")
+        save(out)
+    save(out)
     return 0
 
 

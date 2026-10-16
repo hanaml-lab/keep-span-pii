@@ -2,7 +2,8 @@
 
     taskset -c 0-7 python scripts/latency_cpu.py --runs small-K-s0 deberta-K-s0 modernbert-K-s0 --threads 1 4 8
 
-For each run, precision (fp32, int8), thread count and input length: 10 warm-up passes, then --reps timed passes;
+For each run, precision (fp32; int8 with onnxruntime's default recipe; int8-mix, the MLP output projections kept in
+fp32, where that file exists), thread count and input length: 10 warm-up passes, then --reps timed passes;
 the median and 90th percentile are recorded, with the load average before and after, since the machine is shared.
 Writes results/latency_cpu.json.
 """
@@ -48,8 +49,11 @@ def main() -> int:
     rng = np.random.default_rng(0)
     rows = []
     for run in args.runs:
-        for prec, fname in (("fp32", "model.onnx"), ("int8", "model_int8.onnx")):
+        for prec, fname in (("fp32", "model.onnx"), ("int8", "model_int8.onnx"),
+                            ("int8-mix", "model_int8_fp32-mlp-out.onnx")):
             path = ROOT / "checkpoints" / run / "onnx" / fname
+            if not path.exists():
+                continue
             for th in args.threads:
                 sess = session(path, th)
                 names = {i.name for i in sess.get_inputs()}

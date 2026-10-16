@@ -110,8 +110,8 @@ def block() -> str:
 def main() -> int:
     p = ROOT / "README.md"
     text = p.read_text()
-    new = re.sub(r"(<!-- results:start -->\n).*?(\n<!-- results:end -->)", lambda m: m.group(1) + block() + m.group(2),
-                 text, flags=re.S)
+    new = re.sub(r"(<!-- results:start -->\n).*?(<!-- results:end -->)",
+                 lambda m: m.group(1) + block() + "\n" + m.group(2), text, flags=re.S)
     p.write_text(new)
     print(block())
     return 0

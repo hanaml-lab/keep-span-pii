@@ -11,6 +11,61 @@ A model that redacts personal data on a device before text reaches a cloud model
 ## Results
 
 <!-- results:start -->
+| Model | Negatives | F1 strict | core removed | TAB removed | TAB keep redacted ↓ | WikiNEuRal redacted ↓ |
+|---|---|---:|---:|---:|---:|---:|
+| bert-small, off the shelf | none | 57.0 | 80.9 | 71.9 | 58.7 | 67.9 |
+| bert-small (28.5M) | none | 78.4 ± 0.4 | 97.6 ± 0.1 | 92.4 ± 0.2 | 70.1 ± 1.4 | 65.1 ± 0.9 |
+| bert-small (28.5M) | K | 79.6 ± 0.3 | 96.7 ± 0.0 | 86.3 ± 0.4 | 28.5 ± 1.6 | 62.2 ± 1.0 |
+| bert-small (28.5M) | W | 78.7 ± 0.2 | 97.6 ± 0.1 | 92.0 ± 0.1 | 69.6 ± 1.2 | 24.4 ± 0.7 |
+| bert-small (28.5M) | K+W | 80.2 ± 0.3 | 96.6 ± 0.2 | 85.6 ± 0.5 | 27.9 ± 0.9 | 23.5 ± 1.1 |
+| ModernBERT-base (150M) | none | 80.0 ± 0.3 | 97.4 ± 0.2 | 91.7 ± 0.4 | 69.1 ± 3.0 | 57.6 ± 2.2 |
+| ModernBERT-base (150M) | K | 80.4 ± 0.4 | 95.5 ± 0.1 | 83.3 ± 0.1 | 23.6 ± 0.4 | 53.6 ± 1.5 |
+| ModernBERT-base (150M) | W | 78.9 ± 0.5 | 97.5 ± 0.1 | 91.8 ± 0.2 | 68.5 ± 0.9 | 22.8 ± 2.1 |
+| ModernBERT-base (150M) | K+W | 80.0 ± 0.1 | 95.7 ± 0.2 | 83.9 ± 0.2 | 24.3 ± 0.6 | 23.1 ± 2.6 |
+| DeBERTa-v3-base (184M) | none | 82.5 ± 0.5 | 98.7 ± 0.1 | 93.8 ± 0.2 | 71.2 ± 0.7 | 58.4 ± 2.2 |
+| DeBERTa-v3-base (184M) | K | 83.7 ± 0.6 | 97.5 ± 0.1 | 87.3 ± 0.6 | 24.5 ± 1.3 | 54.0 ± 2.5 |
+| DeBERTa-v3-base (184M) | W | 82.4 ± 0.5 | 98.6 ± 0.0 | 93.9 ± 0.2 | 72.0 ± 0.9 | 7.7 ± 1.1 |
+| DeBERTa-v3-base (184M) | K+W | 83.6 ± 0.2 | 97.3 ± 0.1 | 87.2 ± 0.3 | 24.3 ± 1.5 | 6.8 ± 0.4 |
+
+Percent on the test split, mean ± standard deviation over seeds (seeds per row: 3). F1 is the macro mean over OpenPII, Faker, WNUT-17 and TAB; core removal (names, places, contacts, identifiers fully removed) is pooled over them. K: keep-span negatives; W: Wikipedia negatives.
+
+Effect of keep-span negatives (K minus none, percentage points, 95% bootstrap interval):
+
+| Model | TAB keep redacted | TAB removed | core removed | F1 strict |
+|---|---:|---:|---:|---:|
+| bert-small (28.5M) | -41.6 [-45.3, -38.1] | -6.1 [-7.4, -5.0] | -0.9 [-1.4, -0.6] | +1.2 [+0.7, +1.6] |
+| ModernBERT-base (150M) | -45.5 [-49.3, -41.7] | -8.4 [-9.9, -7.1] | -1.9 [-2.6, -1.3] | +0.4 [-0.5, +1.1] |
+| DeBERTa-v3-base (184M) | -46.7 [-50.9, -42.8] | -6.4 [-7.7, -5.2] | -1.1 [-1.6, -0.8] | +1.3 [+0.8, +1.8] |
+
+int8 (onnxruntime dynamic quantisation) minus fp32, percentage points, mean over the runs evaluated:
+
+| Model | runs | F1 strict | core removed | TAB keep redacted |
+|---|---:|---:|---:|---:|
+| bert-small (28.5M) | 12 | -0.22 | -0.02 | -0.17 |
+| ModernBERT-base (150M) | 12 | -39.30 | -32.94 | -22.83 |
+| DeBERTa-v3-base (184M) | 12 | -82.99 | -87.72 | -46.64 |
+
+The base models with their MLP output projections kept in fp32 (int8 elsewhere), minus fp32:
+
+| Model | runs | size (MB) | F1 strict | core removed | TAB keep redacted |
+|---|---:|---:|---:|---:|---:|
+| ModernBERT-base (150M) | 4 | 209 | -1.02 | -0.09 | +0.40 |
+| DeBERTa-v3-base (184M) | 4 | 328 | -0.94 | -0.32 | +0.63 |
+
+Browser timing (chromium 149.0.7827.55, onnxruntime-web 1.30.0, WebAssembly; median ms per forward pass, batch 1):
+
+| Model | threads | 32 tokens | 128 tokens | 512 tokens | session ready (s) |
+|---|---:|---:|---:|---:|---:|
+| small-int8 | 1 | 39.3 | 158.9 | 821.6 | 0.9 |
+| small-int8 | 4 | 22.4 | 72.7 | 205.2 | 0.8 |
+| small-fp32 | 1 | 67.8 | 267.3 | 1209.5 | 1.2 |
+| small-fp32 | 4 | 32.1 | 69.6 | 304.2 | 1.1 |
+| modernbert-int8-mix | 1 | 362.8 | 1426.2 | 7010.9 | 2.5 |
+| modernbert-int8-mix | 4 | 114.6 | 390.2 | 1829.9 | 2.6 |
+| deberta-int8-mix | 1 | 373.2 | 1423.8 | 6742.9 | 4.3 |
+| deberta-int8-mix | 4 | 114.6 | 384.0 | 1848.4 | 4.3 |
+
+Compute: 36 fine-tuning runs, 7.8 GPU-hours on one RTX 4070 Ti SUPER, including each run's evaluation (mean minutes per run: bert-small 2, ModernBERT-base 14, DeBERTa-v3-base 22).
 <!-- results:end -->
 
 `results/summary.json` holds every number above and in the report, computed by `scripts/aggregate.py` from the per-run files.

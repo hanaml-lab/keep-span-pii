@@ -50,9 +50,9 @@ SOURCES: dict[str, dict] = {
         "name": "WNUT-17 emerging and rare entities",
         "repo": "leondz/wnut_17",
         "kind": "dataset",
-        # The dataset is a loading script; the Hub's own Parquet conversion of it is pinned here.
-        "revision": "refs%2Fconvert%2Fparquet",
-        "revision_note": "Parquet conversion of revision be8fbd57399293da6f9aad56a793bce5bf1fd30e",
+        # The dataset is a loading script; the Hub's own Parquet conversion of it (refs/convert/parquet) is pinned.
+        "revision": "1ac0b6d18c8a1a1d1606b24bef78b8af2f92d2d9",
+        "revision_note": "Parquet conversion (refs/convert/parquet) of revision be8fbd57399293da6f9aad56a793bce5bf1fd30e",
         "licence": "CC BY 4.0",
         "page": "https://noisy-text.github.io/2017/emerging-rare-entities.html",
         "files": ["wnut_17/train/0000.parquet", "wnut_17/validation/0000.parquet", "wnut_17/test/0000.parquet"],

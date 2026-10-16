@@ -59,26 +59,26 @@
     "name": "WNUT-17 emerging and rare entities",
     "repo": "leondz/wnut_17",
     "kind": "dataset",
-    "revision": "refs%2Fconvert%2Fparquet",
-    "revision_note": "Parquet conversion of revision be8fbd57399293da6f9aad56a793bce5bf1fd30e",
+    "revision": "1ac0b6d18c8a1a1d1606b24bef78b8af2f92d2d9",
+    "revision_note": "Parquet conversion (refs/convert/parquet) of revision be8fbd57399293da6f9aad56a793bce5bf1fd30e",
     "licence": "CC BY 4.0",
     "page": "https://noisy-text.github.io/2017/emerging-rare-entities.html",
     "files": [
       {
         "path": "wnut_17/train/0000.parquet",
-        "url": "https://huggingface.co/datasets/leondz/wnut_17/resolve/refs%2Fconvert%2Fparquet/wnut_17/train/0000.parquet",
+        "url": "https://huggingface.co/datasets/leondz/wnut_17/resolve/1ac0b6d18c8a1a1d1606b24bef78b8af2f92d2d9/wnut_17/train/0000.parquet",
         "bytes": 309383,
         "sha256": "6139f865cc3babe93d21947c0f4d239d4dea6f74bc7bdd9ebe0ab9dde74ce3af"
       },
       {
         "path": "wnut_17/validation/0000.parquet",
-        "url": "https://huggingface.co/datasets/leondz/wnut_17/resolve/refs%2Fconvert%2Fparquet/wnut_17/validation/0000.parquet",
+        "url": "https://huggingface.co/datasets/leondz/wnut_17/resolve/1ac0b6d18c8a1a1d1606b24bef78b8af2f92d2d9/wnut_17/validation/0000.parquet",
         "bytes": 67097,
         "sha256": "8e15496da8f258ff853b614e4ce9c88d79de08244fdc192a3249c2efbb996ba8"
       },
       {
         "path": "wnut_17/test/0000.parquet",
-        "url": "https://huggingface.co/datasets/leondz/wnut_17/resolve/refs%2Fconvert%2Fparquet/wnut_17/test/0000.parquet",
+        "url": "https://huggingface.co/datasets/leondz/wnut_17/resolve/1ac0b6d18c8a1a1d1606b24bef78b8af2f92d2d9/wnut_17/test/0000.parquet",
         "bytes": 116408,
         "sha256": "c85ed5a45c4393f97bf64da11e9a49d4109e903a051c0e43073d3d732d748b58"
       }

@@ -31,9 +31,11 @@ from int8_variants import ATTN_OUT, MLP_IN, MLP_OUT, quantize, weight_matmuls  #
 
 # Each recipe: the node-name patterns of the weight products left in fp32.
 RECIPES = {
-    "fp32-mlp-out": MLP_OUT,
-    "fp32-mlp": MLP_OUT + MLP_IN,
-    "fp32-attn-out": ATTN_OUT,
+    "fp32-mlp-out": (MLP_OUT, False),
+    "fp32-mlp": (MLP_OUT + MLP_IN, False),
+    "fp32-attn-out": (ATTN_OUT, False),
+    "fp32-emb": ((), True),
+    "fp32-emb-mlp-out": (MLP_OUT, True),
 }
 
 
@@ -54,9 +56,10 @@ def main() -> int:
         fp32 = ckpt / "onnx" / "model.onnx"
         q = ckpt / "onnx" / f"model_int8_{args.recipe}.onnx"
         names = weight_matmuls(fp32)
-        exclude = [n for n in names if any(re.search(p, n) for p in RECIPES[args.recipe])]
+        patterns, matmul_only = RECIPES[args.recipe]
+        exclude = [n for n in names if any(re.search(p, n) for p in patterns)]
         t0 = time.time()
-        quantize(fp32, q, exclude, per_channel=False)
+        quantize(fp32, q, exclude, per_channel=False, matmul_only=matmul_only)
         tok = AutoTokenizer.from_pretrained(ckpt)
         t1 = time.time()
         preds = predict_with(forward_fn(session(q, args.threads)), tok, docs, 8192)
@@ -66,6 +69,7 @@ def main() -> int:
             for did in sorted(preds):
                 f.write(json.dumps({"id": did, "spans": preds[did]}) + "\n")
         info = {"run": run, "recipe": args.recipe, "fp32_products": len(exclude), "weight_products": len(names),
+                "fp32_embeddings": matmul_only,
                 "int8_onnx_bytes": q.stat().st_size, "quantize_s": round(t1 - t0, 1),
                 "eval_s": round(time.time() - t1, 1), "threads": args.threads}
         out.with_name(f"onnx_{args.recipe}.json").write_text(json.dumps(info, indent=2) + "\n")

@@ -43,11 +43,13 @@ def weight_matmuls(path: Path) -> list[str]:
     return [n.name for n in m.graph.node if n.op_type == "MatMul" and n.input[1] in init]
 
 
-def quantize(fp32: Path, out: Path, exclude: list[str], per_channel: bool) -> None:
+def quantize(fp32: Path, out: Path, exclude: list[str], per_channel: bool, matmul_only: bool = False) -> None:
+    """onnxruntime's dynamic int8, leaving `exclude` in fp32; matmul_only leaves embedding gathers in fp32 too."""
     from onnxruntime.quantization import QuantType, quantize_dynamic
 
+    kw = {"op_types_to_quantize": ["MatMul"]} if matmul_only else {}
     quantize_dynamic(str(fp32), str(out), weight_type=QuantType.QInt8, per_channel=per_channel,
-                     nodes_to_exclude=exclude)
+                     nodes_to_exclude=exclude, **kw)
 
 
 def main() -> int:
@@ -55,6 +57,7 @@ def main() -> int:
     ap.add_argument("run")
     ap.add_argument("--per-source", type=int, default=60)
     ap.add_argument("--threads", type=int, default=8)
+    ap.add_argument("--only", nargs="*", default=None, help="names of the variants to run")
     args = ap.parse_args()
     from transformers import AutoTokenizer
 
@@ -72,31 +75,41 @@ def main() -> int:
         return [n for n in names if any(re.search(p, n) for p in parts)]
 
     variants = {
-        "default": ([], False),
-        "per-channel weights": ([], True),
-        "fp32 MLP output projections": (pick(*MLP_OUT), False),
-        "fp32 attention output projections": (pick(*ATTN_OUT), False),
-        "fp32 MLP input projections": (pick(*MLP_IN), False),
-        "fp32 head and classifier": (pick("/head/", "/classifier/"), False),
+        "default": ([], False, False),
+        "per-channel weights": ([], True, False),
+        "fp32 MLP output projections": (pick(*MLP_OUT), False, False),
+        "fp32 attention output projections": (pick(*ATTN_OUT), False, False),
+        "fp32 MLP input projections": (pick(*MLP_IN), False, False),
+        "fp32 head and classifier": (pick("/head/", "/classifier/"), False, False),
+        "fp32 embeddings": ([], False, True),
+        "fp32 embeddings and MLP output projections": (pick(*MLP_OUT), False, True),
     }
+    if args.only:
+        variants = {k: v for k, v in variants.items() if k in args.only}
     out = {"run": args.run, "docs": len(docs), "per_source": args.per_source, "weight_matmuls": len(names),
            "variants": {}}
     t0 = time.time()
     ref = M.summarize(docs, predict_with(forward_fn(session(fp32, args.threads)), tok, docs, 8192))["headline"]
     out["fp32"] = {k: ref[k] for k in KEYS}
     print("fp32", {k: round(100 * v, 1) for k, v in out["fp32"].items()}, f"{time.time() - t0:.0f}s", flush=True)
-    for name, (exclude, per_channel) in variants.items():
-        if name != "default" and not exclude and not per_channel:
+    for name, (exclude, per_channel, matmul_only) in variants.items():
+        if name != "default" and not exclude and not per_channel and not matmul_only:
             continue
         q = ROOT / "scratch" / f"{args.run}-variant.onnx"
         q.parent.mkdir(parents=True, exist_ok=True)
-        quantize(fp32, q, exclude, per_channel)
+        quantize(fp32, q, exclude, per_channel, matmul_only)
         h = M.summarize(docs, predict_with(forward_fn(session(q, args.threads)), tok, docs, 8192))["headline"]
         out["variants"][name] = {"excluded_matmuls": len(exclude), "per_channel": per_channel,
+                                 "fp32_embeddings": matmul_only,
                                  "bytes": q.stat().st_size, **{k: h[k] for k in KEYS}}
         print(name, len(exclude), {k: round(100 * (h[k] - ref[k]), 1) for k in KEYS}, flush=True)
         q.unlink()
-    (ROOT / "results" / "runs" / args.run / "int8_variants.json").write_text(json.dumps(out, indent=2) + "\n")
+    path = ROOT / "results" / "runs" / args.run / "int8_variants.json"
+    if path.exists():  # keep variants scored earlier on the same subset
+        prev = json.loads(path.read_text())
+        if prev.get("per_source") == out["per_source"]:
+            out["variants"] = prev["variants"] | out["variants"]
+    path.write_text(json.dumps(out, indent=2) + "\n")
     return 0
 
 

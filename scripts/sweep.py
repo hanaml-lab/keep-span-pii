@@ -3,7 +3,8 @@
 Order: seed 0 of all twelve configurations first, then seeds 1 and 2 of the keep-span ablation (base, K), then
 seeds 1 and 2 of the Wikipedia conditions (W, KW). A job whose results/runs/<run>/metrics_test.json exists is
 skipped, so the sweep can be stopped and resumed. Before each job the GPU must have --need-gb free; otherwise the
-sweep waits. Each job's output goes to logs/runs/<run>.log and one line per job to logs/sweep.jsonl.
+sweep waits. Each job's output goes to logs/runs/<run>.log and one line per job to logs/sweep.jsonl. After each
+job, scripts/curves.py computes the operating curves of every finished run that lacks them (logs/runs/curves.log).
 
     python scripts/sweep.py                 # the whole sweep
     python scripts/sweep.py --models small  # one model
@@ -88,6 +89,10 @@ def main() -> int:
             sweep_log.flush()
             print(json.dumps(rec), flush=True)
             if rc == 0:
+                # The operating curves of every finished run that has none yet, on the GPU, before the next job.
+                with (logs / "curves.log").open("a") as f:
+                    subprocess.run([sys.executable, "scripts/curves.py", "--all", "--device", "cuda", "--mem-gb", "3.0"],
+                                   cwd=ROOT, env=env, stdout=f, stderr=subprocess.STDOUT)
                 break
             time.sleep(60)
     return 0

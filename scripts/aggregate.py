@@ -119,6 +119,34 @@ def tab_types(docs, preds_list) -> dict:
             "redact": {t: {"n": n, "removal": v / n} for t, (n, v) in sorted(red.items())}}
 
 
+def keep_strings(docs, preds_by_cond: dict[str, list[dict]], types=("ORG", "LOC"), top: int = 12) -> list[dict]:
+    """The most frequent TAB keep spans of the given types (public bodies and places), with the share of their
+    occurrences each condition redacts, pooled over the runs given for it."""
+    occ: dict[str, list] = defaultdict(list)
+    for d in docs:
+        if d["source"] != "tab":
+            continue
+        for s, e, t in d["keep"]:
+            if t not in types:
+                continue
+            s2, e2 = trim(d["text"], s, e)
+            key = d["text"][s2:e2]
+            key = key[4:] if key.lower().startswith("the ") else key
+            occ[key].append((d["id"], s2, e2))
+    rows = []
+    for key, places in sorted(occ.items(), key=lambda kv: -len(kv[1]))[:top]:
+        row = {"text": key, "n": len(places)}
+        for cond, preds_list in preds_by_cond.items():
+            hit = tot = 0
+            for preds in preds_list:
+                for did, s, e in places:
+                    tot += 1
+                    hit += any(ps < e and pe > s for ps, pe, _ in preds.get(did, []))
+            row[cond] = hit / tot if tot else None
+        rows.append(row)
+    return rows
+
+
 def main() -> int:
     docs = load_split("test")
     src_idx = {s: np.array([i for i, d in enumerate(docs) if d["source"] == s]) for s in SOURCES}
@@ -228,6 +256,25 @@ def main() -> int:
                                      "steps": rec["config"]["steps"], "params": rec["config"]["params"]}
             tot[n.split("-")[0]] += s
     summary["compute_total_gpu_hours"] = {m: v / 3600 for m, v in tot.items()} | {"all": sum(tot.values()) / 3600}
+
+    summary["int8_variants"] = {d.name: json.loads((d / "int8_variants.json").read_text())
+                                for d in sorted(RUNS.iterdir()) if (d / "int8_variants.json").exists()}
+    for name in ("int8_recipe",):
+        summary[name] = {}
+    for d in sorted(RUNS.iterdir()):
+        for p in sorted(d.glob("metrics_test_int8_*.json")):
+            recipe = p.stem.replace("metrics_test_int8_", "")
+            h = json.loads(p.read_text())["headline"]
+            ref = runs[d.name]["metrics"]["headline"]
+            info = d / f"onnx_{recipe}.json"
+            summary["int8_recipe"].setdefault(recipe, {})[d.name] = {
+                "delta": {k: h[k] - ref[k] for k in KEYS},
+                **(json.loads(info.read_text()) if info.exists() else {})}
+
+    by_cond = {c: [load_preds(RUNS / n / "pred_test.jsonl.gz") for n, (m, cc, _) in trained.items() if cc == c]
+               for c in ("base", "K")}
+    if all(by_cond.values()):
+        summary["tab_keep_strings"] = keep_strings(docs, by_cond)
 
     if "offshelf-small" in runs:
         r = runs["offshelf-small"]["metrics"]

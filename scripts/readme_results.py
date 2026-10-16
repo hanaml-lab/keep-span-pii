@@ -68,6 +68,19 @@ def block() -> str:
                 out.append(f"| {name} | {d['f1_strict_macro']['n']} | " + " | ".join(
                     f"{100 * d[k]['mean']:+.2f}" for k in ("f1_strict_macro", "removal_core_pooled",
                                                             "tab_keep_violation")) + " |")
+    mix = S.get("int8_recipe", {}).get("fp32-mlp-out", {})
+    if mix:
+        out.append("")
+        out.append("The base models with their MLP output projections kept in fp32 (int8 elsewhere), minus fp32:")
+        out.append("")
+        out.append("| Model | runs | size (MB) | F1 strict | core removed | TAB keep redacted |")
+        out.append("|---|---:|---:|---:|---:|---:|")
+        for m, name in MODELS:
+            rs = [r for n, r in mix.items() if n.startswith(m + "-")]
+            if rs:
+                out.append(f"| {name} | {len(rs)} | {rs[0]['int8_onnx_bytes'] / 1e6:.0f} | " + " | ".join(
+                    f"{statistics.fmean(100 * r['delta'][k] for r in rs):+.2f}"
+                    for k in ("f1_strict_macro", "removal_core_pooled", "tab_keep_violation")) + " |")
     lat = ROOT / "results" / "latency_browser.json"
     if lat.exists():
         W = json.loads(lat.read_text())

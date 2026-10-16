@@ -147,6 +147,42 @@ def keep_strings(docs, preds_by_cond: dict[str, list[dict]], types=("ORG", "LOC"
     return rows
 
 
+def strict_errors(docs, preds_list) -> dict:
+    """Why gold spans are not matched strictly, per source, pooled over the given runs: missed altogether, found with
+    the right type but other boundaries, found with the right boundaries but another type, or neither."""
+    out: dict = {}
+    for preds in preds_list:
+        for d in docs:
+            if d["source"] not in M.REDACT_SOURCES:
+                continue
+            text = d["text"]
+            P = [(*trim(text, s, e), t) for s, e, t in preds.get(d["id"], [])]
+            P = [p for p in P if p[1] > p[0]]
+            Ps = set(P)
+            o = out.setdefault(d["source"], {"gold": 0, "exact": 0, "missed": 0, "boundary": 0, "type": 0, "both": 0,
+                                             "boundary_by_type": defaultdict(int)})
+            for g in ((*trim(text, s, e), t) for s, e, t in d["spans"]):
+                if g[1] <= g[0]:
+                    continue
+                o["gold"] += 1
+                if g in Ps:
+                    o["exact"] += 1
+                    continue
+                ov = [p for p in P if p[0] < g[1] and p[1] > g[0]]
+                if not ov:
+                    o["missed"] += 1
+                elif any(p[0] == g[0] and p[1] == g[1] for p in ov):
+                    o["type"] += 1
+                elif any(p[2] == g[2] for p in ov):
+                    o["boundary"] += 1
+                    o["boundary_by_type"][g[2]] += 1
+                else:
+                    o["both"] += 1
+    for o in out.values():
+        o["boundary_by_type"] = dict(sorted(o["boundary_by_type"].items(), key=lambda kv: -kv[1]))
+    return out
+
+
 def main() -> int:
     docs = load_split("test")
     src_idx = {s: np.array([i for i, d in enumerate(docs) if d["source"] == s]) for s in SOURCES}
@@ -256,6 +292,9 @@ def main() -> int:
                                      "steps": rec["config"]["steps"], "params": rec["config"]["params"]}
             tot[n.split("-")[0]] += s
     summary["compute_total_gpu_hours"] = {m: v / 3600 for m, v in tot.items()} | {"all": sum(tot.values()) / 3600}
+    curve_s = [json.loads((RUNS / n / "curve_test.json").read_text()) for n in trained if (RUNS / n / "curve_test.json").exists()]
+    summary["curves_gpu_hours"] = sum(c["inference_s"] for c in curve_s if c.get("device", "").startswith("cuda")) / 3600
+    summary["curves_on_cpu"] = sorted(c["run"] for c in curve_s if not c.get("device", "").startswith("cuda"))
 
     summary["int8_variants"] = {d.name: json.loads((d / "int8_variants.json").read_text())
                                 for d in sorted(RUNS.iterdir()) if (d / "int8_variants.json").exists()}
@@ -275,6 +314,7 @@ def main() -> int:
                for c in ("base", "K")}
     if all(by_cond.values()):
         summary["tab_keep_strings"] = keep_strings(docs, by_cond)
+    summary["strict_errors"] = strict_errors(docs, [load_preds(RUNS / n / "pred_test.jsonl.gz") for n in trained])
 
     if "offshelf-small" in runs:
         r = runs["offshelf-small"]["metrics"]

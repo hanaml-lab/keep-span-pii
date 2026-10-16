@@ -34,7 +34,7 @@ A model that redacts personal data on a device before text reaches a cloud model
 - **Conditions** (`src/keepspan/train.py`): keep-span negatives (`--keep 1`: keep-span tokens labelled outside a span; `--keep 0`: the same tokens left out of the loss) crossed with Wikipedia negatives (`--wiki 1`: 6,000 paragraphs with every token outside a span; `--wiki 0`: none). Nothing else differs.
 - **Metrics** (`src/keepspan/metrics.py`): strict and lenient precision, recall and F1; removal (every alphanumeric character of a span covered by a prediction); keep-span violation (any alphanumeric character of a keep span covered); predicted spans per 1,000 words of Wikipedia.
 - **Operating curves** (`scripts/curves.py`): a bias on the logit of the outside-a-span label, swept, to tell a better model from a stricter threshold.
-- **Export and int8** (`src/keepspan/export.py`, `scripts/onnx_queue.py`): ONNX export, checked against PyTorch on the full test split, and onnxruntime's dynamic int8 quantisation, evaluated on the full test split.
+- **Export and int8** (`src/keepspan/export.py`, `scripts/onnx_queue.py`): ONNX export, checked against PyTorch on the full test split, and onnxruntime's dynamic int8 quantisation, evaluated on the full test split. With the default recipe the two base models collapse; `scripts/int8_variants.py` finds which weights cause it (the MLP output projections), `scripts/activation_ranges.py` measures the activation outliers at their inputs, and `scripts/eval_int8_recipe.py` evaluates the mixed recipe that keeps those projections in fp32.
 - **Timing** (`scripts/latency_cpu.py`, `bench/browser/`): onnxruntime on CPU, and onnxruntime-web on WebAssembly in headless Chromium driven by Playwright.
 
 ## Reproduce
@@ -55,10 +55,11 @@ python scripts/sweep.py
 
 python scripts/eval_offshelf.py        # the off-the-shelf model, with its own head
 python scripts/onnx_queue.py           # ONNX export, int8, evaluation on CPU
+python scripts/int8_variants.py modernbert-base-s0 --per-source 60    # which weights int8 breaks
+python scripts/activation_ranges.py modernbert-base-s0 small-base-s0 deberta-base-s0
+python scripts/eval_int8_recipe.py --recipe fp32-mlp-out modernbert-K-s0 deberta-K-s0   # and the other seed-0 runs
 python scripts/curves.py --all         # operating curves
-taskset -c 0-7 python scripts/latency_cpu.py --runs small-K-s0 modernbert-K-s0 deberta-K-s0
-(cd bench/browser && npm ci && node bench.mjs --models small-int8=../../checkpoints/small-K-s0/onnx/model_int8.onnx \
-    --vocab small-int8=30522 --out ../../results/latency_browser.json)
+(cd bench/browser && npm ci) && scripts/latency_all.sh    # CPU and browser timing, pinned to cores 0-7
 python scripts/aggregate.py            # results/summary.json
 python scripts/check_results.py        # summary.json against the per-run files
 python scripts/readme_results.py       # the tables above
